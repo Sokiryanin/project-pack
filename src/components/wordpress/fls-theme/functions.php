@@ -173,3 +173,33 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 if ( class_exists( 'WooCommerce' ) ) {
 	require get_template_directory() . '/inc/woocommerce.php';
 }
+
+//можливість завантажити SVG
+
+function my_own_mime_types( $mimes ) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter( 'upload_mimes', 'my_own_mime_types' );
+
+// Перевірка на наявність плагіну
+if (!function_exists('get_fls_field')) {
+    function get_fls_field($field_name, $post_id = false, $default = null)
+    {
+        if (!function_exists('get_field')) {
+            return $default;
+        }
+        $value = get_field($field_name, $post_id);
+        return $value !== null ? $value : $default;
+    }
+}
+
+if (!function_exists('get_fls_fields')) {
+    function get_fls_fields($post_id = false){
+        if (!function_exists('get_fields')) {
+            return $default;
+        }
+        $value = get_fields($post_id);
+        return $value !== null ? $value : $default;
+    }
+}
